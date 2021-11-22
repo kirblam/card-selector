@@ -10,6 +10,7 @@ function App() {
 
 
   const [cards, setCards] = useState([])
+  const [cardsSelected, setSelected] = useState([])
 
   useEffect(() => {
     const getCards = async () => {
@@ -32,7 +33,7 @@ function App() {
     const res = await fetch(`https://api.scryfall.com/cards/search?order=cmc&q=${query}`)
     const data = await res.json()
 
-    console.log(data.data[0].image_uris.small)
+    //console.log(data.data[0].image_uris.small)
 
     return data.data
   }
@@ -43,33 +44,13 @@ function App() {
     setCards(res);
   }
 
-  // // toggle reminder
-  // const toggleReminder = async (id) => {
+  const onToggle = async (id) => {
+      console.log(id);
+      const collision = cardsSelected.includes(id)
 
-  //   const taskToToggle = await fetchTask(id);
-  //   const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
-
-  //   const res = await fetch(`http://localhost:5000/tasks/${id}`,
-  //     {
-  //       method: 'PUT',
-  //       headers: {
-  //         'content-type': 'application/json'
-  //       },
-  //       body: JSON.stringify(updTask)
-  //     })
-
-  //   const data = await res.json();
-
-  //   setTasks(
-  //     tasks.map((task) =>
-  //       task.id === id ? {
-  //         ...task, reminder:
-  //           data.reminder
-  //       } : task
-  //     )
-  //   )
-  //   //console.log(id);
-  // }
+      // if collision, filter out the ID other add the ID to the array
+      collision ? setSelected(cardsSelected.filter( card => card != id )) : setSelected([...cardsSelected, id])   
+  }
 
   return (
     <Router>
@@ -77,7 +58,7 @@ function App() {
         <Header title='Card Selector' />
         <Search onSearch={onSearch} />
         {cards.length > 0 ?
-          <Cards cards={cards} /> :
+          <Cards cards={cards} onToggle={onToggle}  /> :
           'No cards here, d00d'}
         <Routes/>
         <Footer />
