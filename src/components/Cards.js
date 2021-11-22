@@ -6,7 +6,7 @@ const Cards = ( {cards, onDelete, onToggle } ) => {
     <>
       {cards.map((card) => (
           <Card key={card.id} card={card} 
-          onDelete={onDelete} onToggle={onToggle}
+          onDelete={onDelete} onToggle={onToggle} images={card.image_uris}
           />
           )
         )

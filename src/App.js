@@ -8,8 +8,7 @@ import { useState, useEffect } from 'react'
 
 function App() {
 
-  const [showAddTask, setShowAddTask] = useState(false)
-  const [tasks, setTasks] = useState([])
+
   const [cards, setCards] = useState([])
 
   useEffect(() => {
@@ -30,10 +29,10 @@ function App() {
       query = search.search
     }
 
-    const res = await fetch(`https://api.scryfall.com/cards/search?q=${query}`)
+    const res = await fetch(`https://api.scryfall.com/cards/search?order=cmc&q=${query}`)
     const data = await res.json()
 
-    console.log(data.data[0].name)
+    console.log(data.data[0].image_uris.small)
 
     return data.data
   }
