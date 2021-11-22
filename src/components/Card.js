@@ -7,14 +7,16 @@ const Card = ( {card, onDelete, onToggle, images, selected} ) => {
     displayImage = images.small
   }
 
-  //console.log(displayImage);
+  console.log(selected);
+
+  const checked = (selected.includes(card.id))
 
   return (
     <div className='task' >
       <h3>{ card.name } 
       {displayImage && <img src={displayImage} alt={card.name} />}
       <input type="checkbox" value={card.id} 
-      checked={selected}
+      checked={checked}
       onChange={() => onToggle(card.id)}
       />
       </h3>

@@ -58,7 +58,7 @@ function App() {
         <Header title='Card Selector' />
         <Search onSearch={onSearch} />
         {cards.length > 0 ?
-          <Cards cards={cards} onToggle={onToggle}  /> :
+          <Cards cards={cards} onToggle={onToggle}  selected={cardsSelected} /> :
           'No cards here, d00d'}
         <Routes/>
         <Footer />
