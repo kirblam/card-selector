@@ -5,9 +5,7 @@ import Search from './components/Search';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 
-
 function App() {
-
 
   const [cards, setCards] = useState([])
   const [cardsSelected, setSelected] = useState([])
@@ -20,6 +18,40 @@ function App() {
 
     getCards()
   }, [])
+
+    // Add Card
+    const addSelectedCard = async (card) => {
+      console.log('add', card);
+
+      const res = await fetch(`http://localhost:5000/cards`,
+        {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(card)
+        })
+
+      const data = await res.json();
+
+      setCards([...cards, data])
+    }
+
+    // Fetch Selected Cards
+    const fetchSelectedCards = async () => {
+      const res = await fetch('http://localhost:5000/cards')
+      const data = await res.json()
+  
+      return data
+    }
+  
+    // Fetch Selected Card
+    const fetchSelectedCard = async (id) => {
+      const res = await fetch(`http://localhost:5000/card/${id}`)
+      const data = await res.json()
+  
+      return data
+    }
 
   // Fetch Cards
   const fetchCards = async (search) => {
@@ -45,11 +77,11 @@ function App() {
   }
 
   const onToggle = async (id) => {
-      console.log(id);
+
       const collision = cardsSelected.includes(id)
 
       // if collision, filter out the ID other add the ID to the array
-      collision ? setSelected(cardsSelected.filter( card => card != id )) : setSelected([...cardsSelected, id])   
+      collision ? setSelected(cardsSelected.filter( card => card != id )) : setSelected([...cardsSelected, id]); addSelectedCard({id}); console.log(id);
   }
 
   return (
