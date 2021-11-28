@@ -105,7 +105,7 @@ function App() {
   }
 
   const CardsWrapper = ({cards}) => {
-    return (cards.length > 0) ? <Cards cards={cards} onToggle={onToggle}  selected={cardsSelected}  /> : 'No cards here, d00d'
+    return (typeof cards !== 'undefined' && cards.length > 0) ? <Cards cards={cards} onToggle={onToggle}  selected={cardsSelected}  /> : 'No cards here, d00d'
   }
 
   return (
